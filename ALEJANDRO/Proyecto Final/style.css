@@ -60,14 +60,14 @@ body {
     cursor: pointer;
 }
 
-/* HOVER VERDE COMO EN LA IMAGEN */
+/*pasar mouse se vea moradp */
 .card:hover {
     border-color: #630699;
     box-shadow: 0 0 12px 630699;
     color: #630699;
 }
 
-/* Barra de energía */
+/* barra de energía */
 .energy-bar {
     width: 70%;
     height: 25px;
@@ -91,7 +91,7 @@ body {
 }
 
 
-/* Footer */
+/* footer */
 .footer {
     margin-top: 40px;
     padding: 20px 0;
