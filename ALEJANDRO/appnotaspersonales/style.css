@@ -1,0 +1,78 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #EAF4F4;
+    padding: 20px;
+}
+
+.contenedor {
+    background-color: #F6FFF8;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+}
+
+textarea {
+    width: 100%;
+    height: 100px; 
+    resize: none;  
+}
+
+.boton-agregar {
+    width: 100%;
+    padding: 15px;
+    background-color: #6B9080;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.lista-notas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.nota {
+    background-color: #848484; 
+    padding: 20px;
+    border-radius: 10px;
+    min-height: 120px;
+}
+
+.titulo-nota {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.texto-nota {
+    margin-bottom: 15px;
+}
+
+.botones-nota {
+    text-align: right;
+}
+
+.boton-icono {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.importante {
+    background-color: #228c50; 
+}
