@@ -5,11 +5,20 @@ const resultado = document.getElementById("resultado");
 
 
 const users = [
-    { id: 1, name: "Juan Pérez", email: "juan.perez@example.com" },
-    { id: 2, name: "María Gómez", email: "maria.gomez@example.com" },
-    { id: 3, name: "Carlos Rodríguez", email: "carlos.rodriguez@example.com" },
-    { id: 4, name: "Laura Martínez", email: "laura.martinez@example.com" },
-    { id: 5, name: "Andrés López", email: "andres.lopez@example.com" },
+    { id: 1, name: "Laura Gomez", email: "laura@email.com", city: "Medellin" },
+    { id: 2, name: "Carlos Ruiz", email: "carlos@email.com", city: "Bogotá" },
+    { id: 3, name: "Sofía Martínez", email: "sofia@email.com", city: "Cali" },
+    { id: 4, name: "Andrés López", email: "andres@email.com", city: "Barranquilla" },
+    { id: 5, name: "Valentina Torres", email: "valentina@email.com", city: "Cartagena" }
+];
+
+const products = [
+    { id: 101, userId: 1, name: "Laptop", price: 3500, status: "Enviado" },
+    { id: 102, userId: 1, name: "Mouse Gamer", price: 150, status: "Entregado" },
+    { id: 103, userId: 2, name: "Teclado Mecanico", price: 280, status: "En proceso" },
+    { id: 104, userId: 3, name: "Monitor 24 pulgadas", price: 900, status: "Entregado" },
+    { id: 105, userId: 3, name: "Base Refrigerante", price: 120, status: "Enviado" },
+    { id: 106, userId: 4, name: "Audifonos Bluetooth", price: 200, status: "Cancelado" }
 ];
 
 
@@ -36,20 +45,73 @@ function showSpinner(id) {
             if (usuario) {
                 resolve(usuario);
             } else {
-                reject("No se encontró ningún usuario con el ID " + id + ".");
+                reject("No se encontro ningun usuario con el ID " + id + ".");
             }
         }, 2000);
 
     });
 }
 
+function buscarPedidos(userId) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const pedidos = products.filter((p) => p.userId === userId);
+            if (pedidos.length > 0) {
+                resolve(pedidos);
+            } else {
+                reject("El usuario no tiene pedidos registrados.");
+            }
+        }, 1500);
+    });
+}
 
+function buscarUltimoPedido(pedidos) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (pedidos.length > 0) {
+                resolve(pedidos[pedidos.length - 1]);
+            } else {
+                reject("No se pudo obtener el último pedido.");
+            }
+        }, 1500);
+    });
+}
 function mostrarUsuario(usuario) {
     resultado.innerHTML =
         '<div class="exito">' +
-        '<p><span>ID:</span> ' + usuario.id + '</p>' +
-        '<p><span>Nombre:</span> ' + usuario.name + '</p>' +
-        '<p><span>Correo:</span> ' + usuario.email + '</p>' +
+        '<h3>Datos del Usuario</h3>' +
+        '<p><span>ID:</span> ' + usuario.id +
+        '</p>' + '<p><span>Nombre:</span> ' + usuario.name +
+        '</p>' + '<p><span>Correo:</span> ' + usuario.email + '</p>' +
+        '</div>';
+}
+
+  function mostrarPedidos(pedidos) {
+            let html = '<div class="pedidos-container"><h3>Productos del Usuario</h3>';
+
+            pedidos.forEach(function (pedido) {
+                html +=
+                    '<div class="producto">' +
+                    '<p><span>Nombre:</span> ' + pedido.name + '</p>' +
+                    '<p><span>Precio:</span> $' + pedido.price + '</p>' +
+                    '<p><span>Estado:</span> ' + pedido.status + '</p>' +
+                    '</div>';
+            });
+
+            html += '</div>';
+            resultado.innerHTML += html;
+        }
+
+   
+
+
+function mostrarUltimoPedido(pedido) {
+    resultado.innerHTML +=
+        '<div class="exito">' +
+        '<h3>Último Pedido Compra Registrada</h3>' +
+        '<p><span>Producto:</span> ' + pedido.name + '</p>' +
+        '<p><span>Precio:</span> $' + pedido.price + '</p>' +
+        '<p><span>Estado:</span> ' + pedido.status + '</p>' +
         '</div>';
 }
 
@@ -74,6 +136,14 @@ btn.addEventListener("click", () => {
     showSpinner(id)
         .then((usuario) => {
             mostrarUsuario(usuario);
+            return buscarPedidos(usuario.id);
+        })
+        .then((pedidos) => {
+            mostrarPedidos(pedidos);
+            return buscarUltimoPedido(pedidos);
+        })
+        .then((ultimoPedido) => {
+            mostrarUltimoPedido(ultimoPedido);
         })
         .catch((err) => {
             mostrarError(err);
