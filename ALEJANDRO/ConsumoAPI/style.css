@@ -1,0 +1,163 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: #1a0a2e;
+    color: #e2e8f0;
+    min-height: 100vh;
+    padding: 24px 16px 40px;
+}
+
+
+header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+h1 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 6px;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #a78bca;
+    margin-bottom: 20px;
+}
+
+
+button {
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    padding: 12px 28px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #a855f7, #7c3aed);
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: system-ui, -apple-system, sans-serif;
+    letter-spacing: 0.3px;
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(168, 85, 247, 0.55);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 5px solid rgba(255, 255, 255, 0.1);
+    border-top-color: #a855f7;
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+    margin: 40px auto;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+.error {
+    color: #f87171;
+    text-align: center;
+    margin: 16px auto;
+    font-size: 14px;
+}
+
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+.country-card {
+    background: #2d1b4e;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #4c2a7a;
+}
+
+.country-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(168, 85, 247, 0.25);
+}
+
+.card-flag {
+    font-size: 3rem;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.card-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 12px;
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.card-info p {
+    font-size: 13px;
+    color: #a78bca;
+}
+
+.card-info span {
+    color: #e2d4f0;
+    font-weight: 600;
+}
+
+.card-region {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    background-color: #a855f720;
+    color: #c084fc;
+    border: 1px solid #a855f740;
+}
+
+
+@media (max-width: 480px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+}
