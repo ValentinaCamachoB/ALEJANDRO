@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clima</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="scripts/main.js" type="module"></script>
+</head>
+<body>
+    <header>
+        <h1>Dashboard de Clima</h1>
+        <p class="subtitle">Datos obtenidos desde Open-Meteo</p>
+ 
+        <!-- Formulario de búsqueda -->
+        <div class="search-wrapper">
+            <input
+                type="text"
+                id="cityInput"
+                class="search-input"
+                placeholder="Buscar ciudad..."
+                autocomplete="off"
+            />
+            <button id="searchBtn">Buscar</button>
+        </div>
+    </header>
+ 
+    <!-- Spinner de carga -->
+    <div id="spinner" class="spinner hide"></div>
+ 
+    <!-- Mensaje de error -->
+    <p id="errorMsg" class="error hide"></p>
+ 
+    <!-- Contenedor de tarjetas de clima -->
+    <div id="container" class="container"></div>
+</body>
+</html>
