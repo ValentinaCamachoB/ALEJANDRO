@@ -1,0 +1,32 @@
+.btn,
+.reset-btn {
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  background: #2f2f2f;
+  color: white;
+
+  transition: all 0.2s ease;
+}
+
+.btn {
+  width: auto;
+  padding: 0px 2rem;
+  height: 55px;
+
+  border-radius: 14px;
+
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.btn:hover {
+  background: #444444;
+  transform: translateY(-2px);
+}
+
+.btn:active,
+.reset-btn:active {
+  transform: scale(0.96);
+}

@@ -1,0 +1,13 @@
+<div class="page">
+  <div class="square" [style.background-color]="selectedColor"></div>
+  <p class="label">{{ currentColor }}</p>
+  <div class="buttons">
+    <button
+      *ngFor="let color of colors"
+      class="btn"
+      (click)="cambiarColor(color.name, color.value)"
+    >
+      {{ color.name }}
+    </button>
+  </div>
+</div>

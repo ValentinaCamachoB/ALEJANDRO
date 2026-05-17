@@ -1,0 +1,10 @@
+<div class="counter-container">
+  <div class="counter-card">
+    <div class="counter-controls">
+      <app-counter-button text="-" (salida)="decrementar()" />
+      <span class="counter-value">{{ counter }}</span>
+      <app-counter-button text="+" (salida)="incrementar()" />
+    </div>
+    <app-counter-button text="Restablecer" (salida)="resetear()" />
+  </div>
+</div>
