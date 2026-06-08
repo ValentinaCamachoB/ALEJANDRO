@@ -1,0 +1,15 @@
+<div class="list-container">
+  <div class="empty-state" *ngIf="products.length === 0">
+    <div class="warning-icon">!</div>
+    <p>No hay productos para mostrar</p>
+  </div>
+
+  <div class="products-grid" *ngIf="products.length > 0">
+    <app-product-card
+      *ngFor="let product of products"
+      [product]="product"
+      (delete)="onDelete($event)"
+      (select)="onSelect($event)"
+    ></app-product-card>
+  </div>
+</div>

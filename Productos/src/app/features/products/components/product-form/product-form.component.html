@@ -1,0 +1,31 @@
+<div class="form-card">
+  <h2 class="form-title">{{ isEditing ? 'Actualizar producto' : 'Nuevo producto' }}</h2>
+
+  <div class="form-group">
+    <label>Nombre</label>
+    <input
+      type="text"
+      [(ngModel)]="nombre"
+      [ngModelOptions]="{ standalone: true }"
+      placeholder="Ej: Mouse Gamer"
+    />
+  </div>
+
+  <div class="form-group">
+    <label>Precio</label>
+    <input
+      type="number"
+      [(ngModel)]="precio"
+      [ngModelOptions]="{ standalone: true }"
+      placeholder="Ej: 50000"
+    />
+  </div>
+
+  <button
+    class="submit-btn"
+    [disabled]="!isValid"
+    (click)="onSubmit()"
+  >
+    {{ isEditing ? 'Actualizar' : 'Crear' }}
+  </button>
+</div>

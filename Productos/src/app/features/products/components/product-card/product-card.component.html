@@ -1,0 +1,7 @@
+<article class="product-card" (click)="onSelect()">
+  <div class="product-info">
+    <h3 class="product-name">{{ product.nombre }}</h3>
+    <span class="product-price">${{ product.precio | number }}</span>
+  </div>
+  <button class="delete-btn" (click)="onDelete($event)">✕</button>
+</article>

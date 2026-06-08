@@ -1,0 +1,43 @@
+.page-wrapper {
+  min-height: 100vh;
+  background: #f5f7fb;
+  display: flex;
+  flex-direction: column;
+}
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
+
+  h1 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #1a1a2e;
+  }
+}
+
+.page-content {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  min-height: calc(100vh - 64px);
+}
+
+.left-panel {
+  border-right: 1px solid #e0e0e0;
+  overflow-y: auto;
+}
+
+.right-panel {
+  padding: 2rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
