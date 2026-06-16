@@ -1,0 +1,10 @@
+<section class="todo-list">
+  <header class="todo-list__header">
+    <h1>Tareas</h1>
+    <span>{{ todos.length }} resultados</span>
+  </header>
+  <div class="todo-list__grid">
+    <app-todo-card *ngFor="let item of todos" [todo]="item">
+    </app-todo-card>
+  </div>
+</section>

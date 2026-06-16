@@ -1,0 +1,8 @@
+<header class="toolbar">
+  <div>
+    <h1>Gestión de Tareas</h1>
+    <p class="api-url">API: https://jsonplaceholder.typicode.com/todos</p>
+  </div>
+  <button (click)="onClick()">Cargar tareas</button>
+</header>
+<app-todo-list [todos]="todos"></app-todo-list>

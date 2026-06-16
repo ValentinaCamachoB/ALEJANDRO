@@ -1,0 +1,7 @@
+<article class="todo-card">
+  <span class="todo-card__id">#{{ todo.id }}</span>
+  <p class="todo-card__title">{{ todo.title }}</p>
+  <span class="todo-card__status" [class.completado]="todo.completed">
+    {{ todo.completed ? 'Completado' : 'Pendiente' }}
+  </span>
+</article>

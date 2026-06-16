@@ -1,0 +1,36 @@
+.todo-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+
+  &__id {
+    font-size: 0.8rem;
+    color: #6b7280;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 1rem;
+    color: #111827;
+  }
+
+  &__status {
+    align-self: flex-start;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #fef3c7;
+    color: #92400e;
+
+    &.completado {
+      background: #d1fae5;
+      color: #065f46;
+    }
+  }
+}
