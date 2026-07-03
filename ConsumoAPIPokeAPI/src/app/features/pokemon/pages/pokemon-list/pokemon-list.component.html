@@ -1,0 +1,54 @@
+<section class="pokemon-list">
+  <header class="pokemon-list__header">
+    <h1>Pokemon</h1>
+    <span *ngIf="!isLoading && !errorMessage">
+      {{ pokemons.length }} de {{ total }} pokémon
+    </span>
+  </header>
+
+  <div *ngIf="isLoading" class="pokemon-list__state">
+    <p>Cargando pokémon...</p>
+  </div>
+
+  <div
+    *ngIf="errorMessage"
+    class="pokemon-list__state pokemon-list__state--error"
+  >
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <div
+    *ngIf="!isLoading && !errorMessage"
+    class="pokemon-list__grid"
+  >
+    <app-pokemon-card
+      *ngFor="let pokemon of pokemons"
+      [pokemon]="pokemon"
+    >
+    </app-pokemon-card>
+  </div>
+
+  <div
+    *ngIf="!isLoading && !errorMessage"
+    class="pokemon-list__pagination"
+  >
+    <button
+      id="prevBtn"
+      (click)="goPrevPage()"
+      [disabled]="page === 0"
+      class="pokemon-list__button"
+    >
+      Anterior
+    </button>
+    <span class="pokemon-list__page-info">
+      Página {{ page + 1 }}
+    </span>
+    <button
+      id="nextBtn"
+      (click)="goNextPage()"
+      class="pokemon-list__button"
+    >
+      Siguiente
+    </button>
+  </div>
+</section>
