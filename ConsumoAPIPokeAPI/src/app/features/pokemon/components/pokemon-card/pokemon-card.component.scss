@@ -72,6 +72,12 @@
     font-size: 0.8rem;
     font-weight: 500;
     text-transform: capitalize;
+    cursor: pointer;
+    transition: background 0.15s ease;
+
+    &:hover {
+      background: #c7d2fe;
+    }
   }
 
   &__info {

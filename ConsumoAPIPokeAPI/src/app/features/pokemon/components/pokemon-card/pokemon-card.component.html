@@ -15,6 +15,8 @@
       <span
         *ngFor="let type of pokemon.types"
         class="pokemon-card__type"
+        (click)="onTypeClick(type)"
+        title="Ver detalle de este tipo"
       >
         {{ type }}
       </span>

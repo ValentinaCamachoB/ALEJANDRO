@@ -1,54 +1,119 @@
 <section class="pokemon-list">
   <header class="pokemon-list__header">
     <h1>Pokemon</h1>
-    <span *ngIf="!isLoading && !errorMessage">
+    <span *ngIf="!isLoading && !errorMessage && !searchTerm">
       {{ pokemons.length }} de {{ total }} pokémon
     </span>
   </header>
 
-  <div *ngIf="isLoading" class="pokemon-list__state">
-    <p>Cargando pokémon...</p>
+  <!-- Opcional: buscador por nombre con debounce -->
+  <div class="pokemon-list__search">
+    <input
+      type="text"
+      class="pokemon-list__search-input"
+      placeholder="Buscar pokémon por nombre (ej: pikachu)..."
+      [(ngModel)]="searchTerm"
+      [ngModelOptions]="{ standalone: true }"
+      (ngModelChange)="onSearchChange($event)"
+    />
+  </div>
+
+  <!-- Opcional: panel con el detalle del tipo seleccionado -->
+  <div *ngIf="isLoadingType" class="pokemon-list__state">
+    <p>Cargando información del tipo...</p>
   </div>
 
   <div
-    *ngIf="errorMessage"
+    *ngIf="typeError"
     class="pokemon-list__state pokemon-list__state--error"
   >
-    <p>{{ errorMessage }}</p>
+    <p>{{ typeError }}</p>
   </div>
 
-  <div
-    *ngIf="!isLoading && !errorMessage"
-    class="pokemon-list__grid"
-  >
-    <app-pokemon-card
-      *ngFor="let pokemon of pokemons"
-      [pokemon]="pokemon"
-    >
-    </app-pokemon-card>
+  <div *ngIf="selectedType && !isLoadingType" class="pokemon-list__type-panel">
+    <div class="pokemon-list__type-panel-header">
+      <h2>Tipo: {{ selectedType.name }}</h2>
+      <button
+        (click)="closeTypeDetail()"
+        class="pokemon-list__button pokemon-list__button--ghost"
+      >
+        Cerrar
+      </button>
+    </div>
+    <p><strong>Débil contra:</strong> {{ selectedType.weaknesses.join(', ') }}</p>
+    <p><strong>Resiste a:</strong> {{ selectedType.resistances.join(', ') }}</p>
+    <p><strong>Pokémon de este tipo:</strong> {{ selectedType.totalPokemon }}</p>
   </div>
 
-  <div
-    *ngIf="!isLoading && !errorMessage"
-    class="pokemon-list__pagination"
-  >
-    <button
-      id="prevBtn"
-      (click)="goPrevPage()"
-      [disabled]="page === 0"
-      class="pokemon-list__button"
+  <!-- Si hay texto en el buscador, se muestra el resultado de la búsqueda -->
+  <ng-container *ngIf="searchTerm; else normalList">
+    <div *ngIf="isSearching" class="pokemon-list__state">
+      <p>Buscando "{{ searchTerm }}"...</p>
+    </div>
+
+    <div
+      *ngIf="searchError"
+      class="pokemon-list__state pokemon-list__state--error"
     >
-      Anterior
-    </button>
-    <span class="pokemon-list__page-info">
-      Página {{ page + 1 }}
-    </span>
-    <button
-      id="nextBtn"
-      (click)="goNextPage()"
-      class="pokemon-list__button"
+      <p>{{ searchError }}</p>
+    </div>
+
+    <div *ngIf="searchResult && !isSearching" class="pokemon-list__grid">
+      <app-pokemon-card
+        [pokemon]="searchResult"
+        (typeSelected)="onTypeSelected($event)"
+      >
+      </app-pokemon-card>
+    </div>
+  </ng-container>
+
+  <!-- Si el buscador está vacío, se muestra el listado paginado normal -->
+  <ng-template #normalList>
+    <div *ngIf="isLoading" class="pokemon-list__state">
+      <p>Cargando pokémon...</p>
+    </div>
+
+    <div
+      *ngIf="errorMessage"
+      class="pokemon-list__state pokemon-list__state--error"
     >
-      Siguiente
-    </button>
-  </div>
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <div
+      *ngIf="!isLoading && !errorMessage"
+      class="pokemon-list__grid"
+    >
+      <app-pokemon-card
+        *ngFor="let pokemon of pokemons"
+        [pokemon]="pokemon"
+        (typeSelected)="onTypeSelected($event)"
+      >
+      </app-pokemon-card>
+    </div>
+
+    <div
+      *ngIf="!isLoading && !errorMessage"
+      class="pokemon-list__pagination"
+    >
+      <button
+        id="prevBtn"
+        (click)="goPrevPage()"
+        [disabled]="page === 0"
+        class="pokemon-list__button"
+      >
+        Anterior
+      </button>
+      <span class="pokemon-list__page-info">
+        Página {{ page + 1 }}
+      </span>
+      <button
+        id="nextBtn"
+        (click)="goNextPage()"
+        class="pokemon-list__button"
+      >
+        Siguiente
+      </button>
+    </div>
+  </ng-template>
 </section>
