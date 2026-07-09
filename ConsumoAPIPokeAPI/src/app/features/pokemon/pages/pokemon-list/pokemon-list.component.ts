@@ -20,14 +20,12 @@ export class PokemonListComponent implements OnInit {
   page: number = 0;
   total: number = 0;
 
-  // --- Opcional: buscador por nombre con debounce ---
   searchTerm: string = '';
   isSearching: boolean = false;
   searchError: string = '';
   searchResult: Pokemon | null = null;
   private searchTerms = new Subject<string>();
 
-  // --- Opcional: detalle de tipo ---
   selectedType: TypeDetail | null = null;
   isLoadingType: boolean = false;
   typeError: string = '';
@@ -76,12 +74,6 @@ export class PokemonListComponent implements OnInit {
     this.loadPokemons();
   }
 
-  // ---------- Opcional: buscador con debounce ----------
-
-  // Cada letra que el usuario escribe entra por "searchTerms".
-  // debounceTime(400) espera 400ms sin que se vuelva a escribir antes
-  // de consultar. switchMap dispara la búsqueda y, si llega una letra
-  // nueva antes de terminar, cancela la búsqueda anterior y usa la nueva.
   iniciarBuscador(): void {
     this.searchTerms
       .pipe(
@@ -114,9 +106,6 @@ export class PokemonListComponent implements OnInit {
           this.cdr.detectChanges();
           console.error('Error de búsqueda:', err);
 
-          // Cuando el observable termina en error, deja de escuchar.
-          // Por eso volvemos a llamar iniciarBuscador(), así el campo
-          // de búsqueda sigue funcionando después de un error.
           this.iniciarBuscador();
         },
       });
@@ -127,10 +116,6 @@ export class PokemonListComponent implements OnInit {
     this.searchTerms.next(value);
   }
 
-  // ---------- Opcional: detalle de tipo ----------
-
-  // Se dispara con el evento (typeSelected) que emite app-pokemon-card
-  // al hacer clic en el nombre de un tipo.
   onTypeSelected(typeName: string): void {
     this.isLoadingType = true;
     this.typeError = '';

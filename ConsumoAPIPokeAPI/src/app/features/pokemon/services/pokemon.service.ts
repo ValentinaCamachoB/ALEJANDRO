@@ -44,7 +44,6 @@ export class PokemonService {
       .pipe(map((pokemonReq: PokemonReq) => this.mapPokemon(pokemonReq)));
   }
 
-  // Opcional: busca un pokémon por nombre (lo usa el buscador con debounce).
   searchPokemonByName(name: string): Observable<Pokemon> {
     const normalizedName = name.trim().toLowerCase();
 
@@ -53,7 +52,6 @@ export class PokemonService {
       .pipe(map((pokemonReq: PokemonReq) => this.mapPokemon(pokemonReq)));
   }
 
-  // Opcional: trae el detalle de un tipo (debilidades y resistencias).
   getTypeDetail(typeName: string): Observable<TypeDetail> {
     return this.http
       .get<TypeReq>(`${this.API_URL}/type/${typeName}`)
