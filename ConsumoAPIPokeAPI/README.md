@@ -1,59 +1,88 @@
 # ConsumoAPIPokeAPI
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.10.
+Aplicación en Angular que consume la [PokeAPI](https://pokeapi.co/) para mostrar un listado paginado de pokémon, buscar por nombre y ver el detalle de fortalezas y debilidades de cada tipo.
 
-## Development server
+## Tecnologías
 
-To start a local development server, run:
+- Angular 21
+- RxJS (Observables, `forkJoin`, `switchMap`, `debounceTime`)
+- TypeScript
+- HttpClient (módulo de Angular para consumir APIs)
 
-```bash
-ng serve
-```
+## Requisitos previos
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Node.js instalado
+- Angular CLI instalado globalmente (`npm install -g @angular/cli`)
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Instalación
 
 ```bash
-ng generate --help
+npm install
 ```
 
-## Building
-
-To build the project run:
+## Levantar el proyecto en desarrollo
 
 ```bash
-ng build
+npm start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Esto ejecuta `ng serve` y abre la app en `http://localhost:4200/`.
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Otros comandos
 
 ```bash
-ng test
+npm run build   
+npm run watch   
+npm test        
+
+
+```
+src/app/
+├── app.module.ts          # módulo raíz, arranca la aplicación
+├── app.component.ts/html  # componente raíz, solo renderiza <app-pokemon-list>
+├── core/                  # cosas globales que se cargan una sola vez (guards, interceptores)
+├── shared/                # cosas reutilizables entre varias pantallas (pipes, componentes genéricos)
+└── features/pokemon/      # toda la lógica de negocio relacionada a pokémon
+    ├── pokemon.module.ts
+    ├── models/             # interfaces con la forma de los datos
+    ├── services/           # comunicación con la PokeAPI
+    ├── pages/pokemon-list/ # pantalla principal (lista, buscador, paginación)
+    └── components/pokemon-card/ # tarjeta reutilizable de un pokémon
 ```
 
-## Running end-to-end tests
+### `models/`
 
-For end-to-end (e2e) testing, run:
+Solo definen la forma de los datos, sin lógica. Hay dos familias:
 
-```bash
-ng e2e
-```
+| Archivo | Descripción |
+|---|---|
+| `pokemon-req.model.ts` | Forma de un pokémon tal cual lo entrega la API (datos anidados) |
+| `pokemon.model.ts` | Forma de un pokémon ya simplificada para la pantalla |
+| `pokemon-list-req.model.ts` | Forma de la lista resumida que entrega la API (`name` y `url`) |
+| `pokemon-page-res.model.ts` | Forma del resultado final de una página (`pokemons` + `total`) |
+| `type-req.model.ts` | Forma de un tipo (fuego, agua, etc.) tal cual lo entrega la API |
+| `type-detail.model.ts` | Forma de un tipo ya simplificada (debilidades y resistencias) |
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### `services/pokemon.service.ts`
 
-## Additional Resources
+Es el único lugar que se comunica con la PokeAPI mediante `HttpClient`. Expone:
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- **`getPokemons(limit, page)`**: pide la lista resumida de pokémon, dispara una petición de detalle por cada uno con `getPokemonDetail`, y combina todas las respuestas con `forkJoin`.
+- **`getPokemonDetail(url)`**: pide el detalle de un pokémon y lo transforma con `mapPokemon`.
+- **`searchPokemonByName(name)`**: busca un pokémon por nombre exacto.
+- **`getTypeDetail(typeName)`**: pide el detalle de un tipo y lo transforma con `mapTypeDetail`.
+- **`mapPokemon` / `mapTypeDetail`** *(privados)*: convierten los datos crudos de la API en los modelos simplificados que usa la pantalla.
+
+### `pages/pokemon-list/`
+
+Componente principal de la pantalla. Carga la lista al iniciar, maneja la paginación y el buscador (con `debounceTime` de 400ms para no disparar una petición por cada tecla presionada).
+
+### `components/pokemon-card/`
+
+Componente reutilizable que solo recibe un pokémon por `@Input()` y lo muestra. No hace peticiones a la API.
+
+## API utilizada
+
+- `GET https://pokeapi.co/api/v2/pokemon?limit={limit}&offset={offset}` — lista paginada
+- `GET https://pokeapi.co/api/v2/pokemon/{nombre}` — detalle de un pokémon
+- `GET https://pokeapi.co/api/v2/type/{nombre}` — detalle de un tipo
