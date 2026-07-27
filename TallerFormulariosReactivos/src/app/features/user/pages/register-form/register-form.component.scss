@@ -1,0 +1,203 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f4f6f9;
+  padding: 2rem;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  width: 100%;
+  max-width: 450px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+  h2 {
+    margin: 0;
+    color: #222;
+    text-align: center;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: #666;
+    margin: 0.5rem 0 2rem;
+    font-size: 0.95rem;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  label {
+    font-weight: 600;
+    color: #444;
+  }
+
+  input {
+    padding: 0.85rem 1rem;
+    border: 1px solid #d6d6d6;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #1976d2;
+      box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.15);
+    }
+
+    &::placeholder {
+      color: #999;
+    }
+
+    &.ng-invalid.ng-touched {
+      border-color: #d32f2f;
+    }
+
+    &.ng-valid.ng-touched {
+      border-color: #2e7d32;
+    }
+  }
+
+  .error {
+    color: #d32f2f;
+    font-size: 0.85rem;
+    line-height: 1.2;
+    margin-top: 0.15rem;
+  }
+
+}
+
+.form-group--checkbox {
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 400;
+    color: #444;
+  }
+
+  .error {
+    width: 100%;
+  }
+}
+
+.password-field {
+  display: flex;
+  gap: 0.5rem;
+
+  input {
+    flex: 1;
+  }
+}
+
+.toggle-btn {
+  padding: 0 1rem;
+  border: 1px solid #d6d6d6;
+  border-radius: 8px;
+  background: #f0f0f0;
+  color: #333;
+  font-size: 0.85rem;
+  cursor: pointer;
+
+  &:hover {
+    background: #e2e2e2;
+  }
+}
+
+.botones {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+
+  button {
+    flex: 1;
+  }
+}
+
+.btn-secundario {
+  padding: 0.9rem;
+  border: 1px solid #b0bec5;
+  border-radius: 8px;
+  background: #fff;
+  color: #444;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: #f0f0f0;
+  }
+}
+
+button[type='submit'] {
+  padding: 0.9rem;
+  border: none;
+  border-radius: 8px;
+  background: #1976d2;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: #1565c0;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    background: #b0bec5;
+    cursor: not-allowed;
+  }
+}
+
+.resumen {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+
+  p {
+    margin: 0;
+  }
+}
+
+.btn-secondary {
+  padding: 0.9rem;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background: #2e7d32;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: #256427;
+  }
+}
