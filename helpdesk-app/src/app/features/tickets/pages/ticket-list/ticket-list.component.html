@@ -1,0 +1,44 @@
+<div class="page-container">
+  <header class="toolbar">
+    <h1>Tickets</h1>
+    <a *ngIf="canCreate" routerLink="/tickets/create" class="btn">Crear ticket</a>
+  </header>
+
+  <div class="filters">
+    <select [(ngModel)]="statusFilter" (change)="onFilterChange()">
+      <option value="">Todos los estados</option>
+      <option value="open">Abierto</option>
+      <option value="in_progress">En progreso</option>
+      <option value="resolved">Resuelto</option>
+      <option value="closed">Cerrado</option>
+    </select>
+
+    <select [(ngModel)]="priorityFilter" (change)="onFilterChange()">
+      <option value="">Todas las prioridades</option>
+      <option value="low">Baja</option>
+      <option value="medium">Media</option>
+      <option value="high">Alta</option>
+      <option value="urgent">Urgente</option>
+    </select>
+
+    <label *ngIf="role === 'agent'" class="unassigned-toggle">
+      <input type="checkbox" [(ngModel)]="unassignedOnly" (change)="onFilterChange()" />
+      Solo sin asignar
+    </label>
+  </div>
+
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+
+  <section class="tickets-grid" *ngIf="tickets.length > 0; else emptyState">
+    <app-ticket-card *ngFor="let ticket of tickets" [ticket]="ticket"></app-ticket-card>
+  </section>
+  <ng-template #emptyState>
+    <p class="empty">No hay tickets para mostrar.</p>
+  </ng-template>
+
+  <div class="pagination" *ngIf="total > limit">
+    <button (click)="prevPage()" [disabled]="page === 1">Anterior</button>
+    <span>Página {{ page }} de {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="page >= totalPages">Siguiente</button>
+  </div>
+</div>

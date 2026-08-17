@@ -1,0 +1,79 @@
+<div class="page-container" *ngIf="ticket">
+  <a routerLink="/tickets" class="back-link">&larr; Volver a tickets</a>
+
+  <div class="card">
+    <header>
+      <h1>{{ ticket.title }}</h1>
+      <div class="badges">
+        <span class="badge status" [class]="ticket.status">{{ ticket.status }}</span>
+        <span class="badge priority" [class]="ticket.priority">{{ ticket.priority }}</span>
+      </div>
+    </header>
+
+    <p class="description">{{ ticket.description }}</p>
+
+    <p class="meta">Creado: {{ ticket.createdAt | date: 'medium' }}</p>
+    <p class="meta">Agente asignado: {{ ticket.agentId || 'Sin asignar' }}</p>
+  </div>
+
+  <div class="card" *ngIf="canUpdate">
+    <h2>Actualizar ticket</h2>
+
+    <form [formGroup]="updateForm" (ngSubmit)="onUpdate()">
+      <div class="form-group">
+        <label for="status">Estado</label>
+        <select formControlName="status" id="status">
+          <option value="open">Abierto</option>
+          <option value="in_progress">En progreso</option>
+          <option value="resolved">Resuelto</option>
+          <option value="closed">Cerrado</option>
+        </select>
+      </div>
+
+      <div class="form-group" *ngIf="role === 'admin'">
+        <label for="priority">Prioridad</label>
+        <select formControlName="priority" id="priority">
+          <option value="low">Baja</option>
+          <option value="medium">Media</option>
+          <option value="high">Alta</option>
+          <option value="urgent">Urgente</option>
+        </select>
+      </div>
+
+      <small class="error" *ngIf="updateError">{{ updateError }}</small>
+
+      <button type="submit">Guardar cambios</button>
+    </form>
+  </div>
+
+  <div class="card" *ngIf="role === 'admin'">
+    <h2>Asignar ticket</h2>
+    <form class="assign-form" (ngSubmit)="onAssign()">
+      <input [(ngModel)]="agentIdToAssign" name="agentId" type="text" placeholder="ID del agente" />
+      <button type="submit">Asignar</button>
+    </form>
+    <small class="error" *ngIf="assignError">{{ assignError }}</small>
+  </div>
+
+  <div class="card">
+    <h2>Comentarios</h2>
+
+    <ul class="comments" *ngIf="ticket.comments.length > 0; else noComments">
+      <li *ngFor="let comment of ticket.comments">
+        <strong>{{ comment.authorName }}</strong>
+        <span class="comment-date">{{ comment.createdAt | date: 'short' }}</span>
+        <p>{{ comment.text }}</p>
+      </li>
+    </ul>
+    <ng-template #noComments>
+      <p class="empty">Aún no hay comentarios.</p>
+    </ng-template>
+
+    <form class="comment-form" (ngSubmit)="onAddComment()">
+      <textarea [(ngModel)]="newComment" name="newComment" rows="3" placeholder="Escribe un comentario..."></textarea>
+      <button type="submit" [disabled]="!newComment.trim()">Comentar</button>
+    </form>
+  </div>
+</div>
+
+<p *ngIf="errorMessage" class="error page-error">{{ errorMessage }}</p>

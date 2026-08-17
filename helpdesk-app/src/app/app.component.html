@@ -1,0 +1,10 @@
+<header class="toolbar" *ngIf="isAuth">
+  <h1>HelpDesk</h1>
+  <nav>
+    <a routerLink="/tickets">Tickets</a>
+    <a routerLink="/users" *ngIf="role === 'admin'">Usuarios</a>
+  </nav>
+  <button (click)="onLogout()" class="logout-btn">Cerrar sesión</button>
+</header>
+
+<router-outlet></router-outlet>

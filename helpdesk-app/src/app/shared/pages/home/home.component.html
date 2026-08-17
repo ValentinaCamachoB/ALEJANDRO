@@ -1,0 +1,12 @@
+<div class="home-container">
+  <h1>HelpDesk</h1>
+  <p>Sistema de gestión de incidencias de soporte técnico.</p>
+
+  <ng-container *ngIf="isAuth; else guest">
+    <a routerLink="/tickets" class="btn">Ver mis tickets</a>
+  </ng-container>
+  <ng-template #guest>
+    <a routerLink="/auth/login" class="btn">Iniciar sesión</a>
+    <a routerLink="/auth/register" class="btn btn-secondary">Registrarse</a>
+  </ng-template>
+</div>

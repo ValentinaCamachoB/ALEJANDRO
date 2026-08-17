@@ -1,0 +1,157 @@
+.page-container {
+  padding: 2rem;
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.back-link {
+  color: #1976d2;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.badges {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.badge {
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  text-transform: capitalize;
+}
+
+.status.open { background: #2563eb; }
+.status.in_progress { background: #f59e0b; }
+.status.resolved { background: #16a34a; }
+.status.closed { background: #6b7280; }
+
+.priority.low { background: #9ca3af; }
+.priority.medium { background: #3b82f6; }
+.priority.high { background: #f97316; }
+.priority.urgent { background: #dc2626; }
+
+.description {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.meta {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+
+  label {
+    font-weight: 600;
+  }
+
+  select {
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
+    border: 1px solid #d6d6d6;
+  }
+}
+
+.assign-form {
+  display: flex;
+  gap: 0.75rem;
+
+  input {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #d6d6d6;
+  }
+}
+
+button {
+  padding: 0.7rem 1.3rem;
+  border: none;
+  border-radius: 8px;
+  background: #1976d2;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: #1565c0;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.comments {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+
+  li {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.75rem;
+  }
+
+  .comment-date {
+    color: #9ca3af;
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+  }
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  textarea {
+    padding: 0.8rem;
+    border-radius: 8px;
+    border: 1px solid #d6d6d6;
+    font-family: inherit;
+    resize: vertical;
+  }
+}
+
+.empty {
+  color: #6b7280;
+}
+
+.error {
+  color: #d32f2f;
+  font-size: 0.85rem;
+}
+
+.page-error {
+  text-align: center;
+  padding: 2rem;
+}

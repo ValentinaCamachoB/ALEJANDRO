@@ -1,0 +1,8 @@
+<article class="ticket-card" [routerLink]="['/tickets', ticket.id]">
+  <header>
+    <span class="badge status" [class]="ticket.status">{{ ticket.status }}</span>
+    <span class="badge priority" [class]="ticket.priority">{{ ticket.priority }}</span>
+  </header>
+  <h3>{{ ticket.title }}</h3>
+  <p>{{ ticket.description }}</p>
+</article>

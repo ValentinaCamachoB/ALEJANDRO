@@ -1,0 +1,32 @@
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 2rem;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+
+  h1 {
+    font-size: 1.3rem;
+    margin-right: auto;
+  }
+
+  nav {
+    display: flex;
+    gap: 1rem;
+  }
+}
+
+.logout-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  background: #dc3545;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
