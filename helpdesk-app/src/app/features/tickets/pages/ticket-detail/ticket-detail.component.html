@@ -13,7 +13,7 @@
     <p class="description">{{ ticket.description }}</p>
 
     <p class="meta">Creado: {{ ticket.createdAt | date: 'medium' }}</p>
-    <p class="meta">Agente asignado: {{ ticket.agentId || 'Sin asignar' }}</p>
+    <p class="meta">Agente asignado: {{ ticket.assignedTo || 'Sin asignar' }}</p>
   </div>
 
   <div class="card" *ngIf="canUpdate">
@@ -58,11 +58,11 @@
   <div class="card">
     <h2>Comentarios</h2>
 
-    <ul class="comments" *ngIf="ticket.comments.length > 0; else noComments">
-      <li *ngFor="let comment of ticket.comments">
-        <strong>{{ comment.authorName }}</strong>
+    <ul class="comments" *ngIf="comments.length > 0; else noComments">
+      <li *ngFor="let comment of comments">
+        <strong>{{ comment.author.name }}</strong>
         <span class="comment-date">{{ comment.createdAt | date: 'short' }}</span>
-        <p>{{ comment.text }}</p>
+        <p>{{ comment.body }}</p>
       </li>
     </ul>
     <ng-template #noComments>

@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://sla-api.areasoftccyt.com",
+    "target": "https://sla-api.alejogiraldo.dev",
     "secure": true,
     "changeOrigin": true,
     "logLevel": "debug"

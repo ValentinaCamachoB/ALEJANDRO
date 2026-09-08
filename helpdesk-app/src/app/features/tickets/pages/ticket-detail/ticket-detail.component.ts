@@ -1,8 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
-import { Ticket } from '../../models/ticket.model';
+import { Comment, Ticket } from '../../models/ticket.model';
 import { TicketService } from '../../services/ticket.service';
 
 @Component({
@@ -16,8 +16,10 @@ export class TicketDetailComponent implements OnInit {
   private ticketService = inject(TicketService);
   private authService = inject(AuthService);
   private fb = inject(FormBuilder);
+  private cdr = inject(ChangeDetectorRef);
 
   ticket: Ticket | null = null;
+  comments: Comment[] = [];
   updateForm: FormGroup;
   newComment = '';
   agentIdToAssign = '';
@@ -45,7 +47,7 @@ export class TicketDetailComponent implements OnInit {
       return true;
     }
     if (this.role === 'agent') {
-      return this.ticket.agentId === this.authService.currentUser?.id;
+      return this.ticket.assignedTo === this.authService.currentUser?.id;
     }
     return false;
   }
@@ -54,6 +56,7 @@ export class TicketDetailComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.loadTicket(id);
+      this.loadComments(id);
     }
   }
 
@@ -65,10 +68,24 @@ export class TicketDetailComponent implements OnInit {
           status: ticket.status,
           priority: ticket.priority,
         });
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.errorMessage =
           err?.error?.error?.message ?? 'No se pudo cargar el ticket.';
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
+  loadComments(id: string) {
+    this.ticketService.getComments(id).subscribe({
+      next: (comments) => {
+        this.comments = comments;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        // Si falla la carga de comentarios, no bloqueamos el resto de la página.
       },
     });
   }
@@ -78,12 +95,16 @@ export class TicketDetailComponent implements OnInit {
       return;
     }
     this.updateError = '';
+    const id = this.ticket.id;
 
-    this.ticketService.updateTicket(this.ticket.id, this.updateForm.value).subscribe({
-      next: (ticket) => (this.ticket = ticket),
+    this.ticketService.updateTicket(id, this.updateForm.value).subscribe({
+      next: () => {
+        this.loadTicket(id);
+      },
       error: (err) => {
         this.updateError =
           err?.error?.error?.message ?? 'No se pudo actualizar el ticket.';
+        this.cdr.detectChanges();
       },
     });
   }
@@ -93,15 +114,17 @@ export class TicketDetailComponent implements OnInit {
       return;
     }
     this.assignError = '';
+    const id = this.ticket.id;
 
-    this.ticketService.assignTicket(this.ticket.id, this.agentIdToAssign.trim()).subscribe({
-      next: (ticket) => {
-        this.ticket = ticket;
+    this.ticketService.assignTicket(id, this.agentIdToAssign.trim()).subscribe({
+      next: () => {
         this.agentIdToAssign = '';
+        this.loadTicket(id);
       },
       error: (err) => {
         this.assignError =
           err?.error?.error?.message ?? 'No se pudo asignar el ticket.';
+        this.cdr.detectChanges();
       },
     });
   }
@@ -110,15 +133,18 @@ export class TicketDetailComponent implements OnInit {
     if (!this.ticket || !this.newComment.trim()) {
       return;
     }
+    const id = this.ticket.id;
+    const body = this.newComment.trim();
 
-    this.ticketService.addComment(this.ticket.id, this.newComment.trim()).subscribe({
-      next: (ticket) => {
-        this.ticket = ticket;
+    this.ticketService.addComment(id, body).subscribe({
+      next: () => {
         this.newComment = '';
+        this.loadComments(id);
       },
       error: (err) => {
         this.errorMessage =
           err?.error?.error?.message ?? 'No se pudo agregar el comentario.';
+        this.cdr.detectChanges();
       },
     });
   }

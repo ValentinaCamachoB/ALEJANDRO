@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../../../../core/services/auth.service';
 import { Ticket, TicketPriority, TicketStatus } from '../../models/ticket.model';
 import { TicketService } from '../../services/ticket.service';
@@ -12,6 +12,7 @@ import { TicketService } from '../../services/ticket.service';
 export class TicketListComponent implements OnInit {
   private ticketService = inject(TicketService);
   private authService = inject(AuthService);
+  private cdr = inject(ChangeDetectorRef);
 
   tickets: Ticket[] = [];
   total = 0;
@@ -55,10 +56,12 @@ export class TicketListComponent implements OnInit {
         next: (res) => {
           this.tickets = res.data;
           this.total = res.total;
+          this.cdr.detectChanges();
         },
         error: (err) => {
           this.errorMessage =
             err?.error?.error?.message ?? 'No se pudieron cargar los tickets.';
+          this.cdr.detectChanges();
         },
       });
   }
